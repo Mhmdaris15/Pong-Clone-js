@@ -1,0 +1,73 @@
+*,*::after, *::before {
+  box-sizing: border-box;
+}
+
+:root {
+    --hue: 200;
+    --saturation: 50%;
+    --foreground-color:hsl(var(--hue), var(--saturation), 75%);
+    --background-color:hsl(var(--hue), var(--saturation), 25%);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    background-color: var(--background-color);
+    /* background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%); */
+}
+
+.paddle {
+    --position: 50;
+
+    position: absolute;
+    height: 10vh;
+    width: 1vh;
+    background-color: #333;
+    top: calc(var(--position) * 1vh);
+    transform: translateY(-50%);
+}
+
+.paddle.right {
+    right: 1vw;
+    
+}
+
+.paddle.left {
+    left: 1vw;
+}
+
+.ball {
+    --x: 50;
+    --y: 50;
+
+    position: absolute;
+    height: 2.5vh;
+    width: 2.5vh;
+    background-color: #333;
+    top: calc(var(--y) * 1vh);
+    left: calc(var(--x) * 1vw);
+    transform: translate(-50%, -50%);
+}
+
+.score {
+    display: flex;
+    justify-content: center;
+    font-size: 10vh;
+    color: var(--foreground-color);
+    opacity: .7;
+    margin-top: 1vh;
+}
+
+.score > * {
+    flex-grow: 1;
+    flex-basis: 0;
+    padding: 0 2vh;
+}
+
+.score > :first-child {
+    text-align: right;
+    border-right: .5vh solid var(--foreground-color);
+}
