@@ -2,7 +2,7 @@ import Ball from './ball.js';
 import Background from './background.js';
 
 const ball = new Ball(document.getElementById('ball'));
-const background = new Background(document.getElementsByTagName('body')[0]);
+const background = new Background(document.body);
 
 let lastTime;
 

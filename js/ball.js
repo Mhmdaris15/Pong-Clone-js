@@ -1,4 +1,8 @@
+import Background from "./background.js";
+
 const INITIAL_VELOCITY = 0.01; 
+
+const background = new Background(document.body);
 
 export default class Ball {
     constructor(ballElem) {
@@ -50,9 +54,11 @@ export default class Ball {
         const rect = this.rect();
         if (rect.bottom > window.innerHeight || rect.top < 0) {
             this.direction.y *= -1;
+            background.update()
         }
         if (rect.left < 0 || rect.right > window.innerWidth) {
             this.direction.x *= -1;
+            background.update()
         }
     }
 }
