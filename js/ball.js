@@ -47,7 +47,13 @@ export default class Ball {
     update(deltaTime) {
         this.x += this.direction.x * this.velocity * deltaTime;
         this.y += this.direction.y * this.velocity * deltaTime;
-        console.log(this.rect().x, this.rect().y)
+        const rect = this.rect();
+        if (rect.bottom > window.innerHeight || rect.top < 0) {
+            this.direction.y *= -1;
+        }
+        if (rect.left < 0 || rect.right > window.innerWidth) {
+            this.direction.x *= -1;
+        }
     }
 }
 
