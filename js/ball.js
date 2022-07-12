@@ -1,6 +1,7 @@
 import Background from "./background.js";
 
-const INITIAL_VELOCITY = 0.01; 
+const INITIAL_VELOCITY = 0.00025; 
+const VELOCITY_INCREASE = 0.00001;
 
 const background = new Background(document.body);
 
@@ -51,6 +52,7 @@ export default class Ball {
     update(deltaTime) {
         this.x += this.direction.x * this.velocity * deltaTime;
         this.y += this.direction.y * this.velocity * deltaTime;
+        this.velocity += VELOCITY_INCREASE * (deltaTime / 2);
         const rect = this.rect();
         if (rect.bottom > window.innerHeight || rect.top < 0) {
             this.direction.y *= -1;
@@ -60,6 +62,12 @@ export default class Ball {
             this.direction.x *= -1;
             background.update()
         }
+    }
+
+    pause(){
+        this.x = this.x;
+        this.y = this.y;
+        this.velocity = this.velocity;
     }
 }
 
