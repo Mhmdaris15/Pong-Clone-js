@@ -1,12 +1,20 @@
-import Ball from './ball.js';
-import Background from './background.js';
+import Ball from './Ball.js';
+import Background from './Background.js';
+import Paddle from './Paddle.js';
 
 const ball = new Ball(document.getElementById('ball'));
+const paddlePlayer = new Paddle(document.getElementById('paddle-player'));
+const paddleComputer = new Paddle(document.getElementById('paddle-computer'));
+
 const restart = document.getElementById('restart');
 const pause = document.getElementById('pause');
 const play = document.getElementById('play');
 let PLAY_CLICK_COUNTER = 0;
 let reqAnim;
+
+document.addEventListener("mousemove", e => {
+    paddlePlayer.position = e.y / window.innerHeight * 100;
+})
 
 restart.addEventListener('click', () => {
     ball.reset();

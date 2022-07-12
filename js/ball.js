@@ -1,4 +1,4 @@
-import Background from "./background.js";
+import Background from "./Background.js";
 
 const INITIAL_VELOCITY = 0.00025; 
 const VELOCITY_INCREASE = 0.00001;
