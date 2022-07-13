@@ -5,7 +5,10 @@ import Paddle from './Paddle.js';
 const ball = new Ball(document.getElementById('ball'));
 const paddlePlayer = new Paddle(document.getElementById('paddle-player'));
 const paddleComputer = new Paddle(document.getElementById('paddle-computer'));
+let userScore = document.getElementById('user-score');
+let computerScore = document.getElementById('computer-score');
 
+let velocity = document.getElementById('velocity');
 const restart = document.getElementById('restart');
 const pause = document.getElementById('pause');
 const play = document.getElementById('play');
@@ -36,10 +39,30 @@ let lastTime;
 function update(time) {0
     if (lastTime != null) {
         let deltaTime = time - lastTime; // time difference between last frame and current frame in milliseconds
-        ball.update(deltaTime);
+        ball.update(deltaTime, [paddlePlayer.rect(), paddleComputer.rect()]);
+        paddleComputer.update(deltaTime, ball.y);
     }
     lastTime = time; // remember time for next frames
     reqAnim = window.requestAnimationFrame(update);
+    velocity.innerHTML = Math.round(ball.velocity * 100000) / 100;
+    if (isLose()) handleLose();
+}
+
+function isLose(){
+    const rect = ball.rect();
+    return rect.left < 0 || rect.left > window.innerWidth;
+}
+
+function handleLose(){
+    const rect = ball.rect();
+    if (rect.left < 0) {
+        computerScore.textContent = parseFloat(computerScore.textContent) + 1
+    }
+    else {
+        userScore.textContent = parseFloat(userScore.textContent) + 1
+
+    }
+    ball.reset();
 }
 
 function pauseIt(){

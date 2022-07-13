@@ -1,6 +1,6 @@
 import Background from "./Background.js";
 
-const INITIAL_VELOCITY = 0.00025; 
+const INITIAL_VELOCITY = 0.00025;
 const VELOCITY_INCREASE = 0.00001;
 
 const background = new Background(document.body);
@@ -26,8 +26,9 @@ export default class Ball {
     set y(value) {
         this.ballElem.style.setProperty('--y', value);
     }
-    
-    rect(){
+
+
+    rect() {
         return this.ballElem.getBoundingClientRect();
     }
 
@@ -46,10 +47,10 @@ export default class Ball {
             // console.log(heading);
             // console.log(this.direction);
         }
-        this.velocity = INITIAL_VELOCITY
+        this.velocity = INITIAL_VELOCITY;
     }
 
-    update(deltaTime) {
+    update(deltaTime, paddleRects) {
         this.x += this.direction.x * this.velocity * deltaTime;
         this.y += this.direction.y * this.velocity * deltaTime;
         this.velocity += VELOCITY_INCREASE * (deltaTime / 2);
@@ -58,13 +59,15 @@ export default class Ball {
             this.direction.y *= -1;
             background.update()
         }
-        if (rect.left < 0 || rect.right > window.innerWidth) {
+
+        if (paddleRects.some(r => isCollision(r, rect))) {
             this.direction.x *= -1;
             background.update()
         }
+
     }
 
-    pause(){
+    pause() {
         this.x = this.x;
         this.y = this.y;
         this.velocity = this.velocity;
@@ -73,4 +76,13 @@ export default class Ball {
 
 function randomNumberBetween(min, max) {
     return Math.random() * (max - min) + min;
+}
+
+function isCollision(rect1, rect2){
+    return (
+        rect1.left <= rect2.right &&
+        rect1.right >= rect2.left &&
+        rect1.top <= rect2.bottom && 
+        rect1.bottom >= rect2.top
+    );
 }
